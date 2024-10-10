@@ -1,6 +1,9 @@
 % Daniel H, Daniel O, Aidan, Dominic (absent)
 %brick = ConnectBrick('BRICKYG8A');
 
+% Keyboard
+global key;
+InitKeyboard();
 
 % Checks for yellow , starts program when sees yellow
 while 1
@@ -14,10 +17,11 @@ while 1
         break;            
     end
 
-if brick.ColorCode(2)== 4
+if brick.ColorCode(2) == 4
     brick.beep();
     disp('I see yellow');
-    brick.MoveMotor('A', 50);
+    brick.MoveMotor('A', -50);
+    brick.MoveMotor('D', -50);
 
 % Program
 while 1
@@ -33,16 +37,46 @@ while 1
         break;            
     end
 
-
+    % Stop for red
     if brick.ColorCode(2)== 5
         brick.beep();
         disp('I see red');
         brick.StopAllMotors('Brake');
         pause(2);
-        brick.MoveMotor('A', 50);
+        brick.MoveMotor('A', -50);
+        brick.MoveMotor('D', -50);
+    end
+
+    % Direct Control
+    if brick.ColorCode(2) == 2
+        disp('I see blue');
+        brick.StopAllMotors('Brake');
+        while 1
+            pause(0.1);
+            switch key
+                case 'w'
+                    disp("w");
+                
+                case 'a'
+                    disp("s");
+                
+                case 's'
+                    disp("s");
+
+                case 'd'
+                    disp("d");
+
+                case 'q'
+                    disp("q pressed")
+                    brick.StopAllMotors('Brake');
+                    CloseKeyboard();
+                    break;
+            end
+        end
     end
 end
 end
 
 end
+
 
